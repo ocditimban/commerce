@@ -1,0 +1,19 @@
+version: '2'
+services:
+    db:
+        image: mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: commerce
+        volumes:
+            - './.data/mysql:/var/lib/mysql'
+    client_app:
+        build: ./drupal/build/app
+        ports:
+            - 90:80
+        volumes:
+            - ./drupal:/app
+        links:
+            - db
+        depends_on:
+            - db
